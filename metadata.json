@@ -1,0 +1,6 @@
+{
+  "name": "Update Oppo A54s",
+  "description": "Aplikasi asisten pembaruan sistem ColorOS dan pengoptimalan khusus Oppo A54s CPH2273.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
