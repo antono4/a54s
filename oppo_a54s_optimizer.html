@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔧 Speed Booster - OPPO A54s Optimizer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 25px 0;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: #00d4ff;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .phone-info {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .phone-info h3 {
+            color: #00d4ff;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .info-item {
+            background: rgba(0,0,0,0.3);
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .info-item .label {
+            font-size: 11px;
+            color: #888;
+            text-transform: uppercase;
+        }
+
+        .info-item .value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            margin-top: 4px;
+        }
+
+        .optimize-card {
+            background: linear-gradient(145deg, #1e3a5f, #0d2137);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .optimize-card:hover {
+            transform: translateY(-2px);
+            border-color: #00d4ff;
+            box-shadow: 0 10px 30px rgba(0,212,255,0.2);
+        }
+
+        .optimize-card .icon {
+            font-size: 36px;
+            margin-bottom: 12px;
+        }
+
+        .optimize-card h4 {
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .optimize-card p {
+            font-size: 13px;
+            color: #aaa;
+            line-height: 1.5;
+        }
+
+        .optimize-card .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #00d4ff, #0099cc);
+            color: #000;
+            padding: 10px 24px;
+            border-radius: 25px;
+            margin-top: 12px;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .tips-section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .tips-section h3 {
+            color: #00d4ff;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tip-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .tip-item:last-child {
+            border-bottom: none;
+        }
+
+        .tip-item .emoji {
+            font-size: 20px;
+        }
+
+        .tip-item .text {
+            flex: 1;
+        }
+
+        .tip-item .title {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .tip-item .desc {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .memory-bar {
+            background: #333;
+            border-radius: 8px;
+            height: 12px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .memory-bar .fill {
+            height: 100%;
+            border-radius: 8px;
+            transition: width 0.5s ease;
+        }
+
+        .memory-bar .fill.low { background: #ff4757; }
+        .memory-bar .fill.medium { background: #ffa502; }
+        .memory-bar .fill.good { background: #2ed573; }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        .status-badge.fast { background: #2ed573; color: #000; }
+        .status-badge.slow { background: #ffa502; color: #000; }
+        .status-badge.critical { background: #ff4757; color: #fff; }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #1a1a2e;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 350px;
+            width: 90%;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .modal-content .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(0,212,255,0.2);
+            border-top-color: #00d4ff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .modal-content h4 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .modal-content p {
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .progress-steps {
+            margin-top: 20px;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            opacity: 0.4;
+            transition: opacity 0.3s;
+        }
+
+        .step.active {
+            opacity: 1;
+        }
+
+        .step .num {
+            width: 28px;
+            height: 28px;
+            background: #333;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .step.active .num {
+            background: #00d4ff;
+            color: #000;
+        }
+
+        .step .text {
+            font-size: 14px;
+        }
+
+        .done-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+
+        .restart-btn {
+            background: #ff4757;
+            color: #fff;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #555;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🚀 Speed Booster</h1>
+            <p>Optimasi Khusus untuk OPPO A54s</p>
+        </div>
+
+        <!-- Phone Info -->
+        <div class="phone-info">
+            <h3>📱 Info Perangkat</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="label">RAM</div>
+                    <div class="value" id="ram-info">4 GB</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">Penyimpanan</div>
+                    <div class="value" id="storage-info">64 GB</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">Android</div>
+                    <div class="value">11</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">ColorOS</div>
+                    <div class="value">11</div>
+                </div>
+            </div>
+            <div style="margin-top: 15px;">
+                <div style="display: flex; justify-content: space-between; font-size: 12px; color: #888;">
+                    <span>Penggunaan RAM</span>
+                    <span id="ram-percent">65%</span>
+                </div>
+                <div class="memory-bar">
+                    <div class="fill medium" id="ram-bar" style="width: 65%;"></div>
+                </div>
+            </div>
+            <div id="status-badge" class="status-badge fast">⚡ Performa Baik</div>
+        </div>
+
+        <!-- Quick Optimize Cards -->
+        <h3 style="margin-bottom: 15px; color: #888; font-size: 14px;">⚡ OPTIMASI CEPAT</h3>
+
+        <div class="optimize-card" onclick="runOptimize('ram')">
+            <div class="icon">🧹</div>
+            <h4>Clean RAM</h4>
+            <p>Tutup aplikasi yang berjalan di background untuk membebaskan RAM</p>
+            <div class="btn">Jalankan Sekarang</div>
+        </div>
+
+        <div class="optimize-card" onclick="runOptimize('cache')">
+            <div class="icon">📦</div>
+            <h4>Clear Cache</h4>
+            <p>Hapus file cache dan data sementara yang tidak diperlukan</p>
+            <div class="btn">Jalankan Sekarang</div>
+        </div>
+
+        <div class="optimize-card" onclick="runOptimize('battery')">
+            <div class="icon">🔋</div>
+            <h4>Power Saving</h4>
+            <p>Aktifkan mode hemat daya dan optimalkan penggunaan baterai</p>
+            <div class="btn">Jalankan Sekarang</div>
+        </div>
+
+        <div class="optimize-card" onclick="runOptimize('all')">
+            <div class="icon">🚀</div>
+            <h4>Full Optimization</h4>
+            <p>Jalankan semua optimasi sekaligus untuk hasil terbaik</p>
+            <div class="btn">🚀 Optimize Semua</div>
+        </div>
+
+        <!-- Tips Section -->
+        <div class="tips-section">
+            <h3>💡 Tips Agar OPPO A54s Tidak Lambat</h3>
+            
+            <div class="tip-item">
+                <div class="emoji">🔴</div>
+                <div class="text">
+                    <div class="title">Matikan Animasi</div>
+                    <div class="desc">Pengaturan > Tentang Ponsel > Versi MIUI tap 7x > Pengembang > Matikan skala animasi ke 0.5x</div>
+                </div>
+            </div>
+
+            <div class="tip-item">
+                <div class="emoji">📱</div>
+                <div class="text">
+                    <div class="title">Batasi Aplikasi Background</div>
+                    <div class="desc">Pengaturan > Baterai > Manajemen Aplikasi > Batasi aktivitas background</div>
+                </div>
+            </div>
+
+            <div class="tip-item">
+                <div class="emoji">🗑️</div>
+                <div class="text">
+                    <div class="title">Hapus Aplikasi Tidak terpakai</div>
+                    <div class="desc">Hapus aplikasi yang jarang digunakan untuk mengosongkan RAM dan penyimpanan</div>
+                </div>
+            </div>
+
+            <div class="tip-item">
+                <div class="emoji">⚡</div>
+                <div class="text">
+                    <div class="title">Gunakan Lite Apps</div>
+                    <div class="desc">Gunakan Facebook Lite, Instagram Lite, atau versi ringan aplikasi lainnya</div>
+                </div>
+            </div>
+
+            <div class="tip-item">
+                <div class="emoji">🔄</div>
+                <div class="text">
+                    <div class="title">Restart Secara Rutin</div>
+                    <div class="desc">Restart HP seminggu sekali untuk menyegarkan sistem dan membersihkan RAM</div>
+                </div>
+            </div>
+
+            <div class="tip-item">
+                <div class="emoji">📂</div>
+                <div class="text">
+                    <div class="title">Gunakan SD Card</div>
+                    <div class="desc">Pindahkan foto/video ke SD card untuk mengosongkan memori internal</div>
+                </div>
+            </div>
+
+            <div class="tip-item">
+                <div class="emoji">🔍</div>
+                <div class="text">
+                    <div class="title">非官方 Rom</div>
+                    <div class="desc">Untuk pengguna tingkat lanjut, pertimbangkan custom ROM seperti LineageOS</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            Speed Booster v1.0 | Dirancang untuk OPPO A54s
+        </div>
+    </div>
+
+    <!-- Loading Modal -->
+    <div class="modal" id="loading-modal">
+        <div class="modal-content">
+            <div class="spinner"></div>
+            <h4 id="modal-title">Mengoptimasi...</h4>
+            <p id="modal-desc">Mohon tunggu sebentar</p>
+            <div class="progress-steps" id="progress-steps">
+                <div class="step" id="step1">
+                    <div class="num">1</div>
+                    <div class="text">Menganalisis sistem...</div>
+                </div>
+                <div class="step" id="step2">
+                    <div class="num">2</div>
+                    <div class="text">Membersihkan memori...</div>
+                </div>
+                <div class="step" id="step3">
+                    <div class="num">3</div>
+                    <div class="text">Mengoptimalkan...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="success-modal">
+        <div class="modal-content">
+            <div class="done-icon">✅</div>
+            <h4>Optimasi Selesai!</h4>
+            <p id="success-message">RAM berhasil dibebaskan</p>
+            <div class="status-badge fast" id="result-badge">Performa Meningkat</div>
+            <button class="restart-btn" onclick="closeModal()">Tutup</button>
+        </div>
+    </div>
+
+    <script>
+        let simulatedRAM = 65;
+        let simulatedCache = 2.5;
+
+        function runOptimize(type) {
+            const modal = document.getElementById('loading-modal');
+            modal.classList.add('show');
+
+            // Reset steps
+            for (let i = 1; i <= 3; i++) {
+                document.getElementById('step' + i).classList.remove('active');
+            }
+
+            let steps = [];
+            let title = '';
+            let desc = '';
+
+            switch(type) {
+                case 'ram':
+                    title = '🧹 Membersihkan RAM...';
+                    desc = 'Menutup aplikasi background';
+                    steps = ['Menganalisis aplikasi aktif...', 'Menutup proses tidak perlu...', 'Membebaskan RAM...'];
+                    break;
+                case 'cache':
+                    title = '📦 Membersihkan Cache...';
+                    desc = 'Menghapus file sementara';
+                    steps = ['Memindai file cache...', 'Menghapus data sementara...', 'Mengosongkan penyimpanan...'];
+                    break;
+                case 'battery':
+                    title = '🔋 Mengoptimasi Baterai...';
+                    desc = 'Menerapkan mode hemat daya';
+                    steps = 'Menganalisis penggunaan baterai...', 'Mengatur kecerahan...', 'Mengaktifkan mode hemat...';
+                    break;
+                case 'all':
+                    title = '🚀 Optimasi Lengkap...';
+                    desc = 'Menjalankan semua optimasi';
+                    steps = ['Menganalisis sistem...', 'Membersihkan RAM & cache...', 'Mengoptimalkan performa...'];
+                    break;
+            }
+
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-desc').textContent = desc;
+
+            // Animate steps
+            let currentStep = 0;
+            const stepInterval = setInterval(() => {
+                if (currentStep < steps.length) {
+                    document.getElementById('step' + (currentStep + 1)).classList.add('active');
+                    currentStep++;
+                } else {
+                    clearInterval(stepInterval);
+                    setTimeout(() => {
+                        modal.classList.remove('show');
+                        showSuccess(type);
+                    }, 500);
+                }
+            }, 800);
+        }
+
+        function showSuccess(type) {
+            const modal = document.getElementById('success-modal');
+            const message = document.getElementById('success-message');
+            const badge = document.getElementById('result-badge');
+
+            // Simulate improvement
+            let improvement = 0;
+            let resultText = '';
+
+            switch(type) {
+                case 'ram':
+                    improvement = Math.floor(Math.random() * 15) + 10;
+                    resultText = `RAM berhasil dibebaskan ${improvement}%`;
+                    break;
+                case 'cache':
+                    improvement = Math.floor(Math.random() * 500) + 200;
+                    resultText = `${improvement} MB cache berhasil dihapus`;
+                    break;
+                case 'battery':
+                    resultText = 'Mode hemat daya diaktifkan';
+                    break;
+                case 'all':
+                    improvement = Math.floor(Math.random() * 20) + 15;
+                    resultText = `Performa meningkat ${improvement}%`;
+                    break;
+            }
+
+            message.textContent = resultText;
+            badge.textContent = '⚡ ' + (improvement > 15 ? 'Performa Signifikan Meningkat' : 'Performa Meningkat');
+            badge.className = 'status-badge fast';
+
+            // Update RAM display
+            simulatedRAM = Math.max(30, simulatedRAM - improvement);
+            updateRAMDisplay();
+
+            modal.classList.add('show');
+        }
+
+        function updateRAMDisplay() {
+            document.getElementById('ram-percent').textContent = simulatedRAM + '%';
+            const bar = document.getElementById('ram-bar');
+            bar.style.width = simulatedRAM + '%';
+            
+            bar.className = 'fill';
+            if (simulatedRAM < 50) bar.classList.add('good');
+            else if (simulatedRAM < 75) bar.classList.add('medium');
+            else bar.classList.add('low');
+
+            const statusBadge = document.getElementById('status-badge');
+            if (simulatedRAM < 50) {
+                statusBadge.textContent = '⚡ Performa Sangat Baik';
+                statusBadge.className = 'status-badge fast';
+            } else if (simulatedRAM < 75) {
+                statusBadge.textContent = '⚠️ Performa Baik';
+                statusBadge.className = 'status-badge slow';
+            } else {
+                statusBadge.textContent = '🔴 Performa Lambat';
+                statusBadge.className = 'status-badge critical';
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('success-modal').classList.remove('show');
+        }
+
+        // Simulate RAM fluctuation over time
+        setInterval(() => {
+            simulatedRAM = Math.min(95, simulatedRAM + Math.floor(Math.random() * 5) - 2);
+            if (Math.random() > 0.7) simulatedRAM += 5;
+            updateRAMDisplay();
+        }, 10000);
+
+        // Initialize
+        updateRAMDisplay();
+    </script>
+</body>
+</html>
